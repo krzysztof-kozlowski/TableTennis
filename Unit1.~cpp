@@ -9,6 +9,9 @@
 #pragma resource "*.dfm"
 TForm1 *Form1;
 
+int ballX = 4;
+int ballY = 4;
+
 //---------------------------------------------------------------------------
 __fastcall TForm1::TForm1(TComponent* Owner)
         : TForm(Owner)
@@ -31,26 +34,26 @@ void __fastcall TForm1::paddle1downTimer(TObject *Sender)
 void __fastcall TForm1::FormKeyDown(TObject *Sender, WORD &Key,
       TShiftState Shift)
 {
-        if (Key == VK_UP)
-                paddle1up->Enabled = true;
-        if (Key == VK_DOWN)
-                paddle1down->Enabled = true;
         if (Key == 65)
-                paddle2up->Enabled = true;
+                paddle1up->Enabled = true;
         if (Key == 90)
+                paddle1down->Enabled = true;
+        if (Key == VK_UP)
+                paddle2up->Enabled = true;
+        if (Key == VK_DOWN)
                 paddle2down->Enabled = true;
 }
 //---------------------------------------------------------------------------
 void __fastcall TForm1::FormKeyUp(TObject *Sender, WORD &Key,
       TShiftState Shift)
 {
-        if (Key == VK_UP)
+        if (Key == 65)
                 paddle1up->Enabled = false;
-        if (Key == VK_DOWN)
+        if (Key == 90)
                 paddle1down->Enabled = false;
-        if (Key == 'A' || Key == 'a')
+        if (Key == VK_UP)
                 paddle2up->Enabled = false;
-        if (Key == 'Z' || Key == 'z')
+        if (Key == VK_DOWN)
                 paddle2down->Enabled = false;
 }
 //---------------------------------------------------------------------------
@@ -69,4 +72,30 @@ void __fastcall TForm1::paddle2downTimer(TObject *Sender)
         paddle2->Top += 8;
 }
 //---------------------------------------------------------------------------
+
+void __fastcall TForm1::ballMoveTimer(TObject *Sender)
+{
+        ball->Top += ballX;
+        ball->Left -= ballY;
+
+        if (ball->Top <= table->Top)
+                ballX = -ballX;
+
+        if (ball->Top + ball->Height >= table->Top + table->Height)
+                ballX = -ballX;
+
+        if (ball->Top + (ball->Height / 2) > paddle1->Top &&
+            ball->Top + (ball->Height / 2) < paddle1->Top + paddle1->Height &&
+            ball->Left == paddle1->Left + paddle1->Width)
+                if (ballY > 0)
+                        ballY = -ballY;        
+
+        if (ball->Top + (ball->Height / 2) > paddle2->Top &&
+            ball->Top + (ball->Height / 2) < paddle2->Top + paddle2->Height &&
+            ball->Left + ball->Width == paddle2->Left)
+                if (ballY > 0)
+                        ballY = -ballY;
+}
+//---------------------------------------------------------------------------
+
 

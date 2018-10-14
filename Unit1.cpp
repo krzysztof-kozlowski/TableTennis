@@ -9,6 +9,9 @@
 #pragma resource "*.dfm"
 TForm1 *Form1;
 
+int ballX = 4;
+int ballY = 4;
+
 //---------------------------------------------------------------------------
 __fastcall TForm1::TForm1(TComponent* Owner)
         : TForm(Owner)
@@ -67,6 +70,38 @@ void __fastcall TForm1::paddle2downTimer(TObject *Sender)
 {
         if (paddle2->Top + paddle2->Height < table->Top + table->Height -10)
         paddle2->Top += 8;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::ballMoveWallTimer(TObject *Sender)
+{
+        ball->Top += ballX;
+        ball->Left += ballY;
+
+        if (ball->Top <= table->Top)
+                ballX = -ballX;
+
+        if (ball->Top + ball->Height >= table->Top + table->Height)
+                ballX = -ballX;
+}
+//---------------------------------------------------------------------------
+
+
+void __fastcall TForm1::ballMoveLeftTimer(TObject *Sender)
+{
+        if (ball->Top + (ball->Height / 2) > paddle1->Top &&
+            ball->Top + (ball->Height / 2) < paddle1->Top + paddle1->Height &&
+            ball->Left == paddle1->Left + paddle1->Width)
+                        ballY = -ballY;       
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::ballMoveRightTimer(TObject *Sender)
+{
+        if (ball->Top + (ball->Height / 2) > paddle2->Top &&
+            ball->Top + (ball->Height / 2) < paddle2->Top + paddle2->Height &&
+            ball->Left + ball->Width == paddle2->Left)
+                        ballY = -ballY;
 }
 //---------------------------------------------------------------------------
 
