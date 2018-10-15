@@ -1,6 +1,6 @@
 object Form1: TForm1
-  Left = 394
-  Top = 174
+  Left = 355
+  Top = 194
   Width = 928
   Height = 480
   Caption = 'Tenis sto'#322'owy'
@@ -24,6 +24,7 @@ object Form1: TForm1
     Height = 441
     Align = alClient
     Brush.Color = clGray
+    Visible = False
   end
   object paddle1: TImage
     Left = 56
@@ -533,6 +534,80 @@ object Form1: TForm1
       FFFF}
     Transparent = True
   end
+  object whoPoint: TLabel
+    Left = 280
+    Top = 56
+    Width = 97
+    Height = 36
+    Alignment = taCenter
+    Caption = 'Label1'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -31
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    ParentFont = False
+    Visible = False
+  end
+  object result: TLabel
+    Left = 280
+    Top = 112
+    Width = 90
+    Height = 36
+    Alignment = taCenter
+    Caption = 'Label2'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -31
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
+    Visible = False
+  end
+  object bounceCounter: TLabel
+    Left = 280
+    Top = 152
+    Width = 135
+    Height = 25
+    Caption = 'bounceCounter'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
+    Visible = False
+  end
+  object gameDuration: TLabel
+    Left = 280
+    Top = 184
+    Width = 122
+    Height = 25
+    Caption = 'gameDuration'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
+    Visible = False
+  end
+  object ButtonContinueGame: TButton
+    Left = 280
+    Top = 240
+    Width = 113
+    Height = 49
+    Caption = 'Kontynuuj'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -19
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 0
+    Visible = False
+    OnClick = ButtonContinueGameClick
+  end
   object paddle1up: TTimer
     Enabled = False
     Interval = 15
@@ -552,19 +627,36 @@ object Form1: TForm1
     Interval = 15
     OnTimer = paddle2upTimer
     Left = 800
-    Top = 16
+    Top = 392
   end
   object paddle2down: TTimer
     Enabled = False
     Interval = 15
     OnTimer = paddle2downTimer
     Left = 832
-    Top = 16
+    Top = 392
   end
-  object ballMove: TTimer
+  object ballMoveWall: TTimer
     Interval = 15
-    OnTimer = ballMoveTimer
-    Left = 440
+    OnTimer = ballMoveWallTimer
+    Left = 392
+    Top = 8
+  end
+  object ballMoveLeft: TTimer
+    Interval = 15
+    OnTimer = ballMoveLeftTimer
+    Left = 424
+    Top = 8
+  end
+  object ballMoveRight: TTimer
+    Interval = 15
+    OnTimer = ballMoveRightTimer
+    Left = 456
+    Top = 8
+  end
+  object gameTimer: TTimer
+    OnTimer = gameTimerTimer
+    Left = 488
     Top = 8
   end
 end
