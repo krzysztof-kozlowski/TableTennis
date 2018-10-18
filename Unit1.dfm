@@ -1,12 +1,11 @@
 object Form1: TForm1
-  Left = 244
-  Top = 84
-  Width = 1111
-  Height = 588
+  Left = 231
+  Top = 87
+  Width = 1115
+  Height = 594
   Caption = 'Tenis sto'#322'owy by Cysio'
   Color = clBtnFace
   UseDockManager = True
-  DockSite = True
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
@@ -3779,9 +3778,10 @@ object Form1: TForm1
   end
   object ButtonContinueGame: TButton
     Left = 280
-    Top = 240
+    Top = 304
     Width = 113
     Height = 49
+    Cursor = crHandPoint
     Caption = 'Kontynuuj'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -3792,6 +3792,23 @@ object Form1: TForm1
     TabOrder = 0
     Visible = False
     OnClick = ButtonContinueGameClick
+  end
+  object ButtonNewGame: TButton
+    Left = 280
+    Top = 248
+    Width = 113
+    Height = 49
+    Cursor = crHandPoint
+    Caption = 'Nowa gra'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -19
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 1
+    Visible = False
+    OnClick = ButtonNewGameClick
   end
   object paddle1up: TTimer
     Enabled = False
@@ -3822,11 +3839,13 @@ object Form1: TForm1
     Top = 504
   end
   object gameTimer: TTimer
+    Enabled = False
     OnTimer = gameTimerTimer
     Left = 488
     Top = 8
   end
   object ballMovement: TTimer
+    Enabled = False
     Interval = 15
     OnTimer = ballMovementTimer
     Left = 456

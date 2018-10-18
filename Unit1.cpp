@@ -27,6 +27,18 @@ AnsiString servingPlayer = "playerLeft";
 __fastcall TForm1::TForm1(TComponent* Owner)
         : TForm(Owner)
 {
+        AnsiString msg1 = "Witaj w grze - Tenis sto³owy!";
+        AnsiString msg2 = "Gracz lewy steruje klawiszami A i Z.";
+        AnsiString msg3 = "Gracz prawy steruje strza³kami w górê i w dó³.";
+        AnsiString msg4 = "Staraj siê uderzaæ pi³kê œrodkiem paletki, aby zdobyæ ¿ó³t¹ gwiazdkê!";
+        AnsiString msg5 = "Dziêki ¿ó³tej gwiazdce mo¿esz zmieniaæ tor lotu pi³ki oraz znacznie przyspieszaæ rozgrywkê.";
+        AnsiString msg6 = "Gracz lewy aktywuje ¿ó³t¹ gwiazdkê klawiszem Q, gracz prawy klawiszem strza³ki w lewo.";
+        AnsiString msg7 = "Uwa¿aj równie¿ na pojawiaj¹ce siê przeszkody!";
+        AnsiString msg8 = "Niezapomnianych wra¿eñ!";
+        ShowMessage(msg1 + sLineBreak + sLineBreak + msg2 + sLineBreak + msg3 + sLineBreak + sLineBreak + msg4 + sLineBreak + msg5 + sLineBreak + msg6 + sLineBreak + msg7+ sLineBreak + sLineBreak + msg8);
+
+        ButtonNewGame->Visible = true;
+
         table->Width = Form1->Width - 14;
         table->Height = Form1->Height - 42;
 
@@ -88,7 +100,15 @@ void __fastcall TForm1::FormKeyDown(TObject *Sender, WORD &Key,
                 if (playerLeftNumberOfBouncingInTheMiddle >= 1 && starYellowLeft->Visible == true &&
                     ballX > 0 && ball->Left <= table->Left + (table->Width / 2))
                 {
-                        ballX += 1;     ballY -= 1;
+                        if (ballX > 0)
+                                ballX += 1;
+                        if (ballX < 0)
+                                ballX -= 1;
+                        if (ballY > 0)
+                                ballY += 1;
+                        if (ballY < 0)
+                                ballY -= 1;
+
                         ballY = -ballY;
 
                         playerLeftNumberOfBouncingInTheMiddle = 0;
@@ -103,7 +123,15 @@ void __fastcall TForm1::FormKeyDown(TObject *Sender, WORD &Key,
                 if (playerRightNumberOfBouncingInTheMiddle >= 1 && starYellowRight->Visible == true &&
                     ballX < 0 && ball->Left >= table->Left + (table->Width / 2))
                 {
-                        ballX -= 1;     ballY += 1;
+                        if (ballX > 0)
+                                ballX += 1;
+                        if (ballX < 0)
+                                ballX -= 1;
+                        if (ballY > 0)
+                                ballY += 1;
+                        if (ballY < 0)
+                                ballY -= 1;
+
                         ballY = -ballY;
 
                         playerRightNumberOfBouncingInTheMiddle = 0;
@@ -132,12 +160,12 @@ void __fastcall TForm1::gameTimerTimer(TObject *Sender)
 {
         gameDurationInSeconds++;
 
-        if ((gameDurationInSeconds > 1) &&
+        if ((gameDurationInSeconds > 10) &&
             ((ball->Left <= (table->Width / 2 - brick1->Width)) ||
             (ball->Left >= (table->Width / 2 + brick1->Width))))
                 brick1->Visible = true;
 
-        if ((gameDurationInSeconds > 3) &&
+        if ((gameDurationInSeconds > 20) &&
             ((ball->Left <= (table->Width / 2 - brick2->Width)) ||
             (ball->Left >= (table->Width / 2 + brick2->Width))))
                 brick2->Visible = true;
@@ -161,7 +189,7 @@ void __fastcall TForm1::ballMovementTimer(TObject *Sender)
         ball->Left >= paddle1->Left + 15 &&
         ball->Left <= paddle1->Left + 25)
         {
-                if (ball->Top >= paddle1->Top /*+ 30*/ && ball->Top + ball->Height <= paddle1->Top + paddle1->Height/*+ 70*/)
+                if (ball->Top >= paddle1->Top + 30 && ball->Top + ball->Height <= paddle1->Top + 70)
                         playerLeftNumberOfBouncingInTheMiddle++;
 
                 ballX = -ballX;
@@ -188,10 +216,11 @@ void __fastcall TForm1::ballMovementTimer(TObject *Sender)
                 gameDuration->Caption = "Czas gry: " + IntToStr(gameDurationInSeconds) + " s";
                 gameDuration->Visible = true;
                 ButtonContinueGame->Visible = true;
+                ButtonNewGame->Visible = true;
         }
 
-        if (playerRightNumberOfBouncingInTheMiddle >= 1)
-                starYellowRight->Visible = true;
+        if (playerLeftNumberOfBouncingInTheMiddle >= 1)
+                starYellowLeft->Visible = true;
 
 //******************************************************************************
 
@@ -201,7 +230,7 @@ void __fastcall TForm1::ballMovementTimer(TObject *Sender)
             ball->Left + ball->Width >= paddle2->Left - 5 &&
             ball->Left + ball->Width <= paddle2->Left + 5)
         {
-                if (ball->Top >= paddle2->Top /*+ 30*/ && ball->Top + ball->Height <= paddle2->Top + paddle2->Height/*+ 70*/)
+                if (ball->Top >= paddle2->Top + 30 && ball->Top + ball->Height <= paddle2->Top + paddle2->Height + 70)
                         playerRightNumberOfBouncingInTheMiddle++;
 
                 ballX = -ballX;
@@ -228,14 +257,15 @@ void __fastcall TForm1::ballMovementTimer(TObject *Sender)
                 gameDuration->Caption = "Czas gry: " + IntToStr(gameDurationInSeconds) + " s";
                 gameDuration->Visible = true;
                 ButtonContinueGame->Visible = true;
+                ButtonNewGame->Visible = true;
         }
 
-        if (playerLeftNumberOfBouncingInTheMiddle >= 1)
-                starYellowLeft->Visible = true;
+        if (playerRightNumberOfBouncingInTheMiddle >= 1)
+                starYellowRight->Visible = true;
 
 
 //******************************************************************************
-        // odbicie brick1
+        // ODBIJANIE BRICK1
         //odbicie z lewej strony
         if ((ball->Top >= brick1->Top - ball->Height && ball->Top + ball->Height <= brick1->Top + brick1->Height + ball->Height) &&
             (ball->Left + ball->Width >= brick1->Left - 3 && ball->Left + ball->Width <= brick1->Left + 3) &&
@@ -268,7 +298,7 @@ void __fastcall TForm1::ballMovementTimer(TObject *Sender)
                         ballY = -ballY;
                  }
 
-        // odbicie brick2
+        // ODBIJANIE BRICK2
         //odbicie z lewej strony
         if ((ball->Top >= brick2->Top - ball->Height && ball->Top + ball->Height <= brick2->Top + brick2->Height + ball->Height) &&
             (ball->Left + ball->Width >= brick2->Left - 3 && ball->Left + ball->Width <= brick2->Left + 3) &&
@@ -300,8 +330,6 @@ void __fastcall TForm1::ballMovementTimer(TObject *Sender)
                  {
                         ballY = -ballY;
                  }
-
-
 }
 
 //---------------------------------------------------------------------------
@@ -320,18 +348,19 @@ void __fastcall TForm1::ButtonContinueGameClick(TObject *Sender)
 
         ballMovement->Enabled = true;
         gameTimer->Enabled = true;
-		
+
         numberOfBallBounced = 0;
         playerLeftNumberOfBouncingInTheMiddle = 0;
         playerRightNumberOfBouncingInTheMiddle = 0;
         gameDurationInSeconds = 0;
-		
+
         whoPoint->Visible = false;
         result->Visible = false;
         bounceCounter->Visible = false;
         ButtonContinueGame->Visible = false;
+        ButtonNewGame->Visible = false;
         gameDuration->Visible = false;
-		
+
         ball->Visible = true;
         ball->Top = table->Height / 2;
         ball->Left = table->Width / 2;
@@ -345,9 +374,50 @@ void __fastcall TForm1::ButtonContinueGameClick(TObject *Sender)
 
         starYellowLeft->Visible = false;
         starYellowRight->Visible = false;;
-		
+
         brick1->Visible = false;
         brick2->Visible = false;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::ButtonNewGameClick(TObject *Sender)
+{
+        ballX = 4;
+        ballY = 4;
+
+        numberOfBallBounced = 0;
+        playerLeftNumberOfBouncingInTheMiddle = 0;
+        playerRightNumberOfBouncingInTheMiddle = 0;
+        gameDurationInSeconds = 0;
+        playerLeftPoints = 0;
+        playerRightPoints = 0;
+
+        whoPoint->Visible = false;
+        result->Visible = false;
+        bounceCounter->Visible = false;
+        ButtonContinueGame->Visible = false;
+        gameDuration->Visible = false;
+
+        ball->Visible = true;
+        ball->Top = table->Height / 2;
+        ball->Left = table->Width / 2;
+
+        table->Width = Form1->Width - 14;
+        table->Height = Form1->Height - 42;
+        paddle1->Left = 50;
+        paddle2->Left = table->Width - 70;
+        ball->Top = table->Height / 2;
+        ball->Left = table->Width / 2;
+
+        starYellowLeft->Visible = false;
+        starYellowRight->Visible = false;;
+
+        brick1->Visible = false;
+        brick2->Visible = false;
+
+        ballMovement->Enabled = true;
+        gameTimer->Enabled = true;
+        ButtonNewGame->Visible = false;
 }
 //---------------------------------------------------------------------------
 

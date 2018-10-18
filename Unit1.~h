@@ -32,6 +32,7 @@ __published:	// IDE-managed Components
         TImage *brick1;
         TTimer *ballMovement;
         TImage *brick2;
+        TButton *ButtonNewGame;
         void __fastcall paddle1upTimer(TObject *Sender);
         void __fastcall FormKeyDown(TObject *Sender, WORD &Key,
           TShiftState Shift);
@@ -43,6 +44,7 @@ __published:	// IDE-managed Components
         void __fastcall gameTimerTimer(TObject *Sender);
         void __fastcall ballMovementTimer(TObject *Sender);
         void __fastcall ButtonContinueGameClick(TObject *Sender);
+        void __fastcall ButtonNewGameClick(TObject *Sender);
 private:	// User declarations
 public:		// User declarations
         __fastcall TForm1(TComponent* Owner);
